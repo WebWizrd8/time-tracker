@@ -10,4 +10,4 @@ Install Express framework, React,  with npm localy.
 Create webapp.js file, and folder static with index.html page
 Add some simple html to index.html.
 In webapp.js set static folder as static.
-Run server with command `node webapp.js` and open [localhost:3000](localhost:3000) in your browser.
+Run server with command `node webapp.js` and open [localhost:3000](http://localhost:3000) in your browser.
