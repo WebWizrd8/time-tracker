@@ -1,0 +1,24 @@
+{
+  "name": "time-tracker",
+  "version": "1.0.0",
+  "description": "mern - mean application",
+  "main": "webapp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "node webapp.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Doder/Time-Tracker.git"
+  },
+  "author": "Aleksa Doderovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Doder/Time-Tracker/issues"
+  },
+  "homepage": "https://github.com/Doder/Time-Tracker#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "react": "^15.4.2"
+  }
+}
