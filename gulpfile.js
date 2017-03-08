@@ -38,3 +38,4 @@ gulp.task('watch', function () {
 
     return b;
 });
+gulp.task('default',['watch']);

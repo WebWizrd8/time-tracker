@@ -18,3 +18,6 @@ Here will be our react code.
 Install react-dom localy `npm install --save react-dom`
 Use ReactDom.render to render some sample html code to main div.
 Use gulp to create bundle task which will make static/bundle.js
+
+##1.2 Making starting layout
+Modularise React components. Make button add bug. Make table which loads from mongo. Use bootstrap-react.

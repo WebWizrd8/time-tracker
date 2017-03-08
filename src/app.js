@@ -1,11 +1,15 @@
-var React = require('react');
-//import ReactDOM from 'react-dom';
-var ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import AddTask from './components/AddTask.js'
+import TaskTable from './components/TaskTable.js'
 
 class Main extends React.Component{
     render(){
        return(
-         <div>Welcome!</div>
+         <div>
+            <AddTask/>
+            <TaskTable/>
+         </div>
        );
     }
 }
