@@ -21,3 +21,7 @@ Use gulp to create bundle task which will make static/bundle.js
 
 ##1.2 Making starting layout
 Modularise React components. Make button add bug. Make table which loads from mongo. Use bootstrap-react.
+
+##2.1
+Install localy mongojs with npm. Make db on mlab. Use mongojs to connect to db.
+Create get api with express.
