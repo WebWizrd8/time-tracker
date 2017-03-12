@@ -6,11 +6,11 @@ import TaskTable from './components/TaskTable.js'
 class Main extends React.Component{
     render(){
        return(
-         <div>
-            <AddTask/>
-            <TaskTable/>
-         </div>
-       );
+          <div>
+          <AddTask/>
+          <TaskTable/>
+          </div>
+      );
     }
 }
 
