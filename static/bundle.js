@@ -49034,6 +49034,8 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _reactBootstrap = require('react-bootstrap');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49041,37 +49043,54 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import $ from 'jquery';
+
 
 var AddTask = function (_React$Component) {
-   _inherits(AddTask, _React$Component);
+  _inherits(AddTask, _React$Component);
 
-   function AddTask() {
-      _classCallCheck(this, AddTask);
+  function AddTask() {
+    _classCallCheck(this, AddTask);
 
-      return _possibleConstructorReturn(this, (AddTask.__proto__ || Object.getPrototypeOf(AddTask)).apply(this, arguments));
-   }
+    return _possibleConstructorReturn(this, (AddTask.__proto__ || Object.getPrototypeOf(AddTask)).apply(this, arguments));
+  }
 
-   _createClass(AddTask, [{
-      key: 'render',
-      value: function render() {
-         return _react2.default.createElement(
-            'div',
+  _createClass(AddTask, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _reactBootstrap.Panel,
+        { header: 'Add Task' },
+        _react2.default.createElement(
+          _reactBootstrap.Form,
+          { inline: true },
+          _react2.default.createElement(
+            _reactBootstrap.FormGroup,
             null,
             _react2.default.createElement(
-               'h1',
-               null,
-               'Add task'
-            )
-         );
-      }
-   }]);
+              _reactBootstrap.ControlLabel,
+              null,
+              'Task Name'
+            ),
+            ' ',
+            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Name your next task!' })
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Button,
+            { bsStyle: 'primary', bsSize: 'small' },
+            'Add'
+          )
+        )
+      );
+    }
+  }]);
 
-   return AddTask;
+  return AddTask;
 }(_react2.default.Component);
 
 module.exports = AddTask;
 
-},{"react":427,"react-dom":257}],434:[function(require,module,exports){
+},{"react":427,"react-bootstrap":246,"react-dom":257}],434:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -49170,7 +49189,7 @@ var TaskTable = function (_React$Component2) {
       });
       return _react2.default.createElement(
         _reactBootstrap.Panel,
-        null,
+        { header: 'Your Tasks' },
         _react2.default.createElement(
           _reactBootstrap.Table,
           { striped: true, condensed: true, bordered: true },

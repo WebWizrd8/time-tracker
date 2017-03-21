@@ -34,7 +34,7 @@ class TaskTable extends React.Component{
         return <TaskRow key={task._id} task={task} />
       });
        return(
-         <Panel>
+         <Panel header="Your Tasks">
             <Table striped condensed bordered>
               <thead>
                 <tr>
