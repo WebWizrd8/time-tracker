@@ -49011,10 +49011,33 @@ var Main = function (_React$Component) {
       tasks: []
     };
     _this.loadData = _this.loadData.bind(_this);
+    _this.addTask = _this.addTask.bind(_this);
     return _this;
   }
 
+  //ajax call
+
+
   _createClass(Main, [{
+    key: 'addTask',
+    value: function addTask(task) {
+      console.log("adding new task");
+      _jquery2.default.ajax({
+        type: "POST",
+        url: "/api/tasks",
+        contentType: "application/json",
+        data: JSON.stringify(task),
+        success: function (data) {
+          var task = data;
+          var tasksModified = this.state.tasks.concat(task);
+          this.setState({ tasks: tasksModified });
+        }.bind(this),
+        error: function error(xhr, status, _error) {
+          console.log("Error adding task:", err);
+        }
+      });
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.loadData();
@@ -49034,7 +49057,7 @@ var Main = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_AddTask2.default, { tasks: this.state.tasks }),
+        _react2.default.createElement(_AddTask2.default, { tasks: this.state.tasks, addTask: this.addTask }),
         _react2.default.createElement(_TaskTable2.default, { tasks: this.state.tasks })
       );
     }
@@ -49083,7 +49106,6 @@ var AddTask = function (_React$Component) {
     _this.state = {
       name: ""
     };
-    _this.addTask = _this.addTask.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     return _this;
@@ -49094,26 +49116,7 @@ var AddTask = function (_React$Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
       console.log("handle submit");
-      this.addTask({ name: this.state.name });
-    }
-    //ajax call
-
-  }, {
-    key: 'addTask',
-    value: function addTask(task) {
-      console.log("adding new task");
-      _jquery2.default.ajax({
-        type: "POST",
-        url: "/api/tasks",
-        contentType: "application/json",
-        data: JSON.stringify(task),
-        success: function success(data) {
-          console.log("task added");
-        },
-        error: function error(xhr, status, _error) {
-          console.log("Error adding task:", err);
-        }
-      });
+      this.props.addTask({ name: this.state.name });
     }
   }, {
     key: 'handleChange',

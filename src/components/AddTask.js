@@ -9,32 +9,15 @@ class AddTask extends React.Component{
     this.state = {
       name : ""
     };
-    this.addTask = this.addTask.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(e){
     e.preventDefault();
     console.log("handle submit");
-    this.addTask({name: this.state.name});
+    this.props.addTask({name: this.state.name});
   }
-  //ajax call
-  addTask(task){
-    console.log("adding new task");
-    $.ajax({
-      type: "POST",
-      url: "/api/tasks",
-      contentType: "application/json",
-      data : JSON.stringify(task),
-      success : function(data){
-        console.log("task added");
-      },
-      error : function(xhr, status, error){
-        console.log("Error adding task:", err);
-      }
-    });
 
-  }
   handleChange(e){
     let target = e.target;
     console.log(target.value);

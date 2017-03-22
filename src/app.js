@@ -11,7 +11,29 @@ class Main extends React.Component{
       tasks : []
     };
     this.loadData = this.loadData.bind(this);
+    this.addTask = this.addTask.bind(this);
   }
+
+  //ajax call
+  addTask(task){
+    console.log("adding new task");
+    $.ajax({
+      type: "POST",
+      url: "/api/tasks",
+      contentType: "application/json",
+      data : JSON.stringify(task),
+      success : function(data){
+        var task = data;
+        var tasksModified = this.state.tasks.concat(task);
+        this.setState({tasks: tasksModified});
+      }.bind(this),
+      error : function(xhr, status, error){
+        console.log("Error adding task:", err);
+      }
+    });
+
+  }
+
   componentDidMount(){
     this.loadData();
   }
@@ -23,7 +45,7 @@ class Main extends React.Component{
   render(){
      return(
         <div>
-        <AddTask tasks = {this.state.tasks}/>
+        <AddTask tasks = {this.state.tasks} addTask = {this.addTask}/>
         <TaskTable tasks = {this.state.tasks}/>
         </div>
     );
