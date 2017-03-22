@@ -48987,6 +48987,10 @@ var _TaskTable = require('./components/TaskTable.js');
 
 var _TaskTable2 = _interopRequireDefault(_TaskTable);
 
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48996,32 +49000,52 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Main = function (_React$Component) {
-    _inherits(Main, _React$Component);
+  _inherits(Main, _React$Component);
 
-    function Main() {
-        _classCallCheck(this, Main);
+  function Main() {
+    _classCallCheck(this, Main);
 
-        return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
+
+    _this.state = {
+      tasks: []
+    };
+    _this.loadData = _this.loadData.bind(_this);
+    return _this;
+  }
+
+  _createClass(Main, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.loadData();
     }
+  }, {
+    key: 'loadData',
+    value: function loadData() {
+      var _this2 = this;
 
-    _createClass(Main, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_AddTask2.default, null),
-                _react2.default.createElement(_TaskTable2.default, null)
-            );
-        }
-    }]);
+      _jquery2.default.ajax('/api/tasks').done(function (data) {
+        _this2.setState({ tasks: data });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_AddTask2.default, { tasks: this.state.tasks }),
+        _react2.default.createElement(_TaskTable2.default, { tasks: this.state.tasks })
+      );
+    }
+  }]);
 
-    return Main;
+  return Main;
 }(_react2.default.Component);
 
 _reactDom2.default.render(_react2.default.createElement(Main, null), document.getElementById('main'));
 
-},{"./components/AddTask.js":433,"./components/TaskTable.js":434,"react":427,"react-dom":257}],433:[function(require,module,exports){
+},{"./components/AddTask.js":433,"./components/TaskTable.js":434,"jquery":156,"react":427,"react-dom":257}],433:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -49035,6 +49059,10 @@ var _reactDom = require('react-dom');
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactBootstrap = require('react-bootstrap');
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49050,10 +49078,51 @@ var AddTask = function (_React$Component) {
   function AddTask() {
     _classCallCheck(this, AddTask);
 
-    return _possibleConstructorReturn(this, (AddTask.__proto__ || Object.getPrototypeOf(AddTask)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (AddTask.__proto__ || Object.getPrototypeOf(AddTask)).call(this));
+
+    _this.state = {
+      name: ""
+    };
+    _this.addTask = _this.addTask.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(AddTask, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      console.log("handle submit");
+      this.addTask({ name: this.state.name });
+    }
+    //ajax call
+
+  }, {
+    key: 'addTask',
+    value: function addTask(task) {
+      console.log("adding new task");
+      _jquery2.default.ajax({
+        type: "POST",
+        url: "/api/tasks",
+        contentType: "application/json",
+        data: JSON.stringify(task),
+        success: function success(data) {
+          console.log("task added");
+        },
+        error: function error(xhr, status, _error) {
+          console.log("Error adding task:", err);
+        }
+      });
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var target = e.target;
+      console.log(target.value);
+      this.setState({ name: target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -49071,11 +49140,11 @@ var AddTask = function (_React$Component) {
               'Task Name'
             ),
             ' ',
-            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Name your next task!' })
+            _react2.default.createElement(_reactBootstrap.FormControl, { name: 'taks-name', type: 'text', placeholder: 'Name your next task!', value: this.state.name, onChange: this.handleChange })
           ),
           _react2.default.createElement(
             _reactBootstrap.Button,
-            { bsStyle: 'primary', bsSize: 'small' },
+            { bsStyle: 'primary', bsSize: 'small', onClick: this.handleSubmit },
             'Add'
           )
         )
@@ -49088,7 +49157,7 @@ var AddTask = function (_React$Component) {
 
 module.exports = AddTask;
 
-},{"react":427,"react-bootstrap":246,"react-dom":257}],434:[function(require,module,exports){
+},{"jquery":156,"react":427,"react-bootstrap":246,"react-dom":257}],434:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -49160,29 +49229,14 @@ var TaskTable = function (_React$Component2) {
 
     var _this2 = _possibleConstructorReturn(this, (TaskTable.__proto__ || Object.getPrototypeOf(TaskTable)).call(this));
 
-    _this2.state = { tasks: [] };
-    _this2.loadData = _this2.loadData.bind(_this2);
+    _this2.state = {};
     return _this2;
   }
 
   _createClass(TaskTable, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.loadData();
-    }
-  }, {
-    key: 'loadData',
-    value: function loadData() {
-      var _this3 = this;
-
-      _jquery2.default.ajax('/api/tasks').done(function (data) {
-        _this3.setState({ tasks: data });
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var taskRows = this.state.tasks.map(function (task) {
+      var taskRows = this.props.tasks.map(function (task) {
         return _react2.default.createElement(TaskRow, { key: task._id, task: task });
       });
       return _react2.default.createElement(

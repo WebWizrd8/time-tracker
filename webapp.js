@@ -20,8 +20,9 @@ app.get('/api/tasks',function(req, res, err){
 
 //add task api
 app.post('/api/tasks', function(req, res, err){
-  const newTask = req.body;
-  db.tasks.insert({name: newTask.name, done: false}, function(err, doc){
+  var newTask = req.body;
+  console.log(newTask);
+  db.tasks.insert({name: newTask.name, done: "false"}, function(err, doc){
     if(err){
       res.send(err);
     }

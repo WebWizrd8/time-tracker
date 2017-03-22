@@ -18,19 +18,11 @@ class TaskRow extends React.Component{
 class TaskTable extends React.Component{
     constructor(){
       super();
-      this.state = {tasks: []};
-      this.loadData = this.loadData.bind(this);
+      this.state = {};
     }
-    componentDidMount(){
-      this.loadData();
-    }
-    loadData(){
-      $.ajax('/api/tasks').done((data) => {
-        this.setState({tasks: data});
-      });
-    }
+
     render(){
-      var taskRows = this.state.tasks.map((task) => {
+      var taskRows = this.props.tasks.map((task) => {
         return <TaskRow key={task._id} task={task} />
       });
        return(
