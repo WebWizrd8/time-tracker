@@ -18,6 +18,18 @@ app.get('/api/tasks',function(req, res, err){
   });
 });
 
+//add task api
+app.post('/api/tasks', function(req, res, err){
+  const newTask = req.body;
+  db.tasks.insert({name: newTask.name, done: false}, function(err, doc){
+    if(err){
+      res.send(err);
+    }
+    res.json(doc);
+  });
+});
+
+//start server
 app.listen(3000, function(){
     console.log('server is running');
 });
