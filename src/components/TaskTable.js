@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Table, Panel} from 'react-bootstrap';
+import {Table, Panel, Checkbox} from 'react-bootstrap';
 import $ from 'jquery';
 
 class TaskRow extends React.Component{
@@ -9,7 +9,8 @@ class TaskRow extends React.Component{
       <tr>
         <td>{this.props.task._id}</td>
         <td>{this.props.task.name}</td>
-        <td>{this.props.task.done}</td>
+        <td>{this.props.task.done == 'true' ?
+           <Checkbox defaultChecked></Checkbox> : <Checkbox></Checkbox>}</td>
       </tr>
     );
   }

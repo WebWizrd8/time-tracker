@@ -49215,7 +49215,7 @@ var TaskRow = function (_React$Component) {
         _react2.default.createElement(
           'td',
           null,
-          this.props.task.done
+          this.props.task.done == 'true' ? _react2.default.createElement(_reactBootstrap.Checkbox, { defaultChecked: true }) : _react2.default.createElement(_reactBootstrap.Checkbox, null)
         )
       );
     }
