@@ -29,6 +29,16 @@ app.post('/api/tasks', function(req, res, err){
   });
 });
 
+//delete task
+app.delete('/api/tasks/:id', function(req, res, err){
+  db.tasks.remove({_id: db.ObjectId(req.params.id)}, function(err, doc){
+    if(err){
+      res.send(err);
+    }
+    res.json(doc);
+  });
+});
+
 //start server
 app.listen(3000, function(){
     console.log('server is running');
