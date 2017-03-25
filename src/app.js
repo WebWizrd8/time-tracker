@@ -18,7 +18,6 @@ class Main extends React.Component{
 
   //ajax call
   addTask(task){
-    console.log("adding new task");
     $.ajax({
       type: "POST",
       url: "/api/tasks",

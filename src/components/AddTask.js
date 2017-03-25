@@ -14,13 +14,12 @@ class AddTask extends React.Component{
   }
   handleSubmit(e){
     e.preventDefault();
-    console.log("handle submit");
     this.props.addTask({name: this.state.name});
+    this.setState({name: ""});
   }
 
   handleChange(e){
     let target = e.target;
-    console.log(target.value);
     this.setState({name: target.value});
   }
     render(){

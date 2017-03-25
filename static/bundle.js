@@ -49023,7 +49023,6 @@ var Main = function (_React$Component) {
   _createClass(Main, [{
     key: 'addTask',
     value: function addTask(task) {
-      console.log("adding new task");
       _jquery2.default.ajax({
         type: "POST",
         url: "/api/tasks",
@@ -49136,14 +49135,13 @@ var AddTask = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      console.log("handle submit");
       this.props.addTask({ name: this.state.name });
+      this.setState({ name: "" });
     }
   }, {
     key: 'handleChange',
     value: function handleChange(e) {
       var target = e.target;
-      console.log(target.value);
       this.setState({ name: target.value });
     }
   }, {
