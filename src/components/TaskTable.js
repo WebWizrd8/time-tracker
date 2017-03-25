@@ -5,12 +5,15 @@ import $ from 'jquery';
 
 class TaskRow extends React.Component{
   render(){
+    const id = this.props.task._id;
     return(
       <tr>
-        <td>{this.props.task._id}</td>
+        <td>{id}</td>
         <td>{this.props.task.name}</td>
         <td>{this.props.task.done == 'true' ?
-           <Checkbox defaultChecked></Checkbox> : <Checkbox></Checkbox>}</td>
+           <Checkbox defaultChecked></Checkbox> : <Checkbox id={id} onChange={(e) => {
+             e.preventDefault();
+             this.props.deleteTask(id);}}></Checkbox>}</td>
       </tr>
     );
   }
@@ -24,7 +27,7 @@ class TaskTable extends React.Component{
 
     render(){
       var taskRows = this.props.tasks.map((task) => {
-        return <TaskRow key={task._id} task={task} />
+        return <TaskRow key={task._id} task={task} deleteTask={this.props.deleteTask}/>
       });
        return(
          <Panel header="Your Tasks">

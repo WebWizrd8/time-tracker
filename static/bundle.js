@@ -49012,6 +49012,8 @@ var Main = function (_React$Component) {
     };
     _this.loadData = _this.loadData.bind(_this);
     _this.addTask = _this.addTask.bind(_this);
+    _this.deleteTask = _this.deleteTask.bind(_this);
+
     return _this;
   }
 
@@ -49032,8 +49034,27 @@ var Main = function (_React$Component) {
           var tasksModified = this.state.tasks.concat(task);
           this.setState({ tasks: tasksModified });
         }.bind(this),
-        error: function error(xhr, status, _error) {
+        error: function error(xhr, status, err) {
           console.log("Error adding task:", err);
+        }
+      });
+    }
+  }, {
+    key: 'deleteTask',
+    value: function deleteTask(id) {
+      _jquery2.default.ajax({
+        type: "DELETE",
+        url: "/api/tasks/" + id,
+        success: function (data) {
+          var index = this.state.tasks.findIndex(function (element) {
+            return element._id === id ? true : false;
+          });
+          var tasksModified = this.state.tasks.slice();
+          var deletedTask = tasksModified.splice(index, 1);
+          this.setState({ tasks: tasksModified });
+        }.bind(this),
+        error: function error(xhr, status, err) {
+          console.log("Error deleting task:", err);
         }
       });
     }
@@ -49058,7 +49079,7 @@ var Main = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_AddTask2.default, { tasks: this.state.tasks, addTask: this.addTask }),
-        _react2.default.createElement(_TaskTable2.default, { tasks: this.state.tasks })
+        _react2.default.createElement(_TaskTable2.default, { tasks: this.state.tasks, deleteTask: this.deleteTask })
       );
     }
   }]);
@@ -49199,13 +49220,16 @@ var TaskRow = function (_React$Component) {
   _createClass(TaskRow, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
+      var id = this.props.task._id;
       return _react2.default.createElement(
         'tr',
         null,
         _react2.default.createElement(
           'td',
           null,
-          this.props.task._id
+          id
         ),
         _react2.default.createElement(
           'td',
@@ -49215,7 +49239,10 @@ var TaskRow = function (_React$Component) {
         _react2.default.createElement(
           'td',
           null,
-          this.props.task.done == 'true' ? _react2.default.createElement(_reactBootstrap.Checkbox, { defaultChecked: true }) : _react2.default.createElement(_reactBootstrap.Checkbox, null)
+          this.props.task.done == 'true' ? _react2.default.createElement(_reactBootstrap.Checkbox, { defaultChecked: true }) : _react2.default.createElement(_reactBootstrap.Checkbox, { id: id, onChange: function onChange(e) {
+              e.preventDefault();
+              _this2.props.deleteTask(id);
+            } })
         )
       );
     }
@@ -49230,17 +49257,19 @@ var TaskTable = function (_React$Component2) {
   function TaskTable() {
     _classCallCheck(this, TaskTable);
 
-    var _this2 = _possibleConstructorReturn(this, (TaskTable.__proto__ || Object.getPrototypeOf(TaskTable)).call(this));
+    var _this3 = _possibleConstructorReturn(this, (TaskTable.__proto__ || Object.getPrototypeOf(TaskTable)).call(this));
 
-    _this2.state = {};
-    return _this2;
+    _this3.state = {};
+    return _this3;
   }
 
   _createClass(TaskTable, [{
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       var taskRows = this.props.tasks.map(function (task) {
-        return _react2.default.createElement(TaskRow, { key: task._id, task: task });
+        return _react2.default.createElement(TaskRow, { key: task._id, task: task, deleteTask: _this4.props.deleteTask });
       });
       return _react2.default.createElement(
         _reactBootstrap.Panel,

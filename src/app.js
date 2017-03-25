@@ -12,6 +12,8 @@ class Main extends React.Component{
     };
     this.loadData = this.loadData.bind(this);
     this.addTask = this.addTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+
   }
 
   //ajax call
@@ -27,11 +29,27 @@ class Main extends React.Component{
         var tasksModified = this.state.tasks.concat(task);
         this.setState({tasks: tasksModified});
       }.bind(this),
-      error : function(xhr, status, error){
+      error : function(xhr, status, err){
         console.log("Error adding task:", err);
       }
     });
 
+  }
+
+  deleteTask(id){
+    $.ajax({
+      type: "DELETE",
+      url: "/api/tasks/"+id,
+      success : function(data){
+        var index = this.state.tasks.findIndex((element) => { return element._id === id ? true : false;});
+        var tasksModified = this.state.tasks.slice();
+        var deletedTask = tasksModified.splice(index, 1);
+        this.setState({tasks : tasksModified});
+      }.bind(this),
+      error : function(xhr, status, err){
+        console.log("Error deleting task:", err);
+      }
+    });
   }
 
   componentDidMount(){
@@ -46,7 +64,7 @@ class Main extends React.Component{
      return(
         <div>
         <AddTask tasks = {this.state.tasks} addTask = {this.addTask}/>
-        <TaskTable tasks = {this.state.tasks}/>
+        <TaskTable tasks = {this.state.tasks} deleteTask = {this.deleteTask}/>
         </div>
     );
   }
