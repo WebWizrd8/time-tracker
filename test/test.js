@@ -1,8 +1,23 @@
-var assert = require('assert');
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal(-1, [1,2,3].indexOf(4));
+let mongojs = require('mongojs');
+
+
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let should = chai.should();
+let server = require('../webapp');
+
+chai.use(chaiHttp);
+describe('Tasks', ()=> {
+  describe('/GET task', ()=> {
+    it('should GET all the tasks', function() {
+      chai.request(server)
+      .get('/api/tasks')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        res.body.lenght.should.be.eql(0);
+        done();
+      });
     });
   });
 });

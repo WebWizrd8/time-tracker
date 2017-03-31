@@ -41,5 +41,7 @@ app.delete('/api/tasks/:id', function(req, res, err){
 
 //start server
 app.listen(3000, function(){
-    console.log('server is running');
+    console.log('server is running on port 3000');
 });
+
+module.exports = app;
