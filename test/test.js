@@ -13,9 +13,10 @@ describe('Tasks', ()=> {
       chai.request(server)
       .get('/api/tasks')
       .end((err, res) => {
+        (err === null).should.be.true;
+        should.exist(res);
         res.should.have.status(200);
         res.body.should.be.a('array');
-        res.body.lenght.should.be.eql(0);
         done();
       });
     });
@@ -26,9 +27,19 @@ describe('Tasks', ()=> {
         name : "new task"
       };
       chai.request(server)
-      .post('api/tasks')
-      .send(task)
+      .post('/api/tasks')
+      .send(JSON.stringify(task))
       .end((err, res) => {
+        let p1 = new Promise((resolve, reject) => {
+          if(err !== null){
+            resolve(err);
+          }
+        });
+        p1.then((err) => {
+            console.log(err);
+        });
+        (err === null).should.be.true;
+        should.exist(res);
         res.should.have.status(200);
         done();
       });
