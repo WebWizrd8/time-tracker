@@ -28,7 +28,7 @@ describe('Tasks', ()=> {
       };
       chai.request(server)
       .post('/api/tasks')
-      .send(JSON.stringify(task))
+      .send(task)
       .end((err, res) => {
         let p1 = new Promise((resolve, reject) => {
           if(err !== null){
