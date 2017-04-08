@@ -21,6 +21,7 @@ app.get('/api/tasks',function(req, res, err){
 //add task api
 app.post('/api/tasks', function(req, res, err){
   var newTask = req.body;
+  if(newTask.name === "") return res.send({errors: "task doesn't have name"});
   db.tasks.insert({name: newTask.name, done: "false"}, function(err, doc){
     if(err){
       res.send(err);
