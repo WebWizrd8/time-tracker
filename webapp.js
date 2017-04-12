@@ -22,12 +22,24 @@ app.get('/api/tasks',function(req, res, err){
 app.post('/api/tasks', function(req, res, err){
   var newTask = req.body;
   if(newTask.name === "") return res.send({errors: "task doesn't have name"});
-  db.tasks.insert({name: newTask.name, done: "false"}, function(err, doc){
-    if(err){
-      res.send(err);
-    }
-    res.json(doc);
-  });
+  else{
+    db.tasks.find({name: newTask.name}, function(err, doc){
+      if(err){
+        res.send(err);
+      }
+      if(doc.length === 0){
+        db.tasks.insert({name: newTask.name, done: "false"}, function(err, doc){
+          if(err){
+            res.send(err);
+          }
+          res.json(doc);
+        });
+      }
+      else{
+        res.send({errors: "this task already exists"});
+      }
+    });
+  }
 });
 
 //delete task

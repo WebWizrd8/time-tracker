@@ -65,6 +65,23 @@ describe('Tasks', ()=> {
       });
 
     });
+    it('should not POST task with same name', (done) => {
+      let task = {
+        name : "new task"
+      };
+      chai.request(server)
+      .post('/api/tasks')
+      .send(task)
+      .end((err, res) => {
+        (err === null).should.be.true;
+        should.exist(res);
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('errors');
+        res.body.errors.should.be.a('string');
+        done();
+      });
+    });
   });
   describe('/DELETE task', () => {
     it('should DELETE added task', (done) => {
