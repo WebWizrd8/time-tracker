@@ -5,7 +5,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let should = chai.should();
 let server = require('../webapp');
-
+let id;
 chai.use(chaiHttp);
 describe('Tasks', ()=> {
   describe('/GET task', ()=> {
@@ -41,6 +41,8 @@ describe('Tasks', ()=> {
         (err === null).should.be.true;
         should.exist(res);
         res.should.have.status(200);
+        id = res.body._id;
+        console.log(id);
         done();
       });
 
@@ -62,6 +64,19 @@ describe('Tasks', ()=> {
         done();
       });
 
+    });
+  });
+  describe('/DELETE task', () => {
+    it('should DELETE added task', (done) => {
+      chai.request(server)
+      .delete('/api/tasks/'+id)
+      .end((err, res) => {
+        (err === null).should.be.true;
+        should.exist(res);
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
     });
   });
 });
