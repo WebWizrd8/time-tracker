@@ -22,6 +22,7 @@ app.get('/api/tasks',function(req, res, err){
 app.post('/api/tasks', function(req, res, err){
   var newTask = req.body;
   if(newTask.name === "") return res.send({errors: "task doesn't have name"});
+  else if(newTask.group === "") return res.send({errors: "task doesn't have group"});
   else{
     db.tasks.find({name: newTask.name}, function(err, doc){
       if(err){
