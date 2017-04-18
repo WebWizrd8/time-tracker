@@ -28,7 +28,7 @@ app.post('/api/tasks', function(req, res, err){
       if(err){
         res.send(err);
       }
-      if(doc.length === 0){
+      else if(doc.length === 0){
         db.tasks.insert({name: newTask.name, done: "false"}, function(err, doc){
           if(err){
             res.send(err);

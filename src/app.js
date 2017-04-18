@@ -24,9 +24,11 @@ class Main extends React.Component{
       contentType: "application/json",
       data : JSON.stringify(task),
       success : function(data){
-        var task = data;
-        var tasksModified = this.state.tasks.concat(task);
-        this.setState({tasks: tasksModified});
+        if(data.errors === ""){
+          var task = data;
+          var tasksModified = this.state.tasks.concat(task);
+          this.setState({tasks: tasksModified});
+        }
       }.bind(this),
       error : function(xhr, status, err){
         console.log("Error adding task:", err);
