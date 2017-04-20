@@ -7,20 +7,23 @@ class AddTask extends React.Component{
   constructor(){
     super();
     this.state = {
-      name : ""
+      name : "",
+      group: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(e){
     e.preventDefault();
-    this.props.addTask({name: this.state.name});
-    this.setState({name: ""});
+    this.props.addTask({name: this.state.name, group: this.state.group});
+    this.setState({name: "", group: ""});
   }
 
   handleChange(e){
     let target = e.target;
-    this.setState({name: target.value});
+    let name = target.name;
+    let value = target.value;
+    this.setState({[name]: value});
   }
     render(){
        return(
@@ -29,7 +32,13 @@ class AddTask extends React.Component{
               <FormGroup>
                 <ControlLabel>Task Name</ControlLabel>
                 {' '}
-                <FormControl name="taks-name" type="text" placeholder="Name your next task!" value={this.state.name} onChange={this.handleChange}/>
+                <FormControl name="name" type="text" placeholder="Name your next task!" value={this.state.name} onChange={this.handleChange}/>
+              </FormGroup>
+              <FormGroup>
+                {' '}
+                <ControlLabel>Group Name</ControlLabel>
+                {' '}
+                <FormControl name="group" type="text" placeholder="Add it to group!" value={this.state.group} onChange={this.handleChange}/>
               </FormGroup>
               <Button bsStyle="primary" bsSize="small" onClick={this.handleSubmit}>Add</Button>
             </Form>

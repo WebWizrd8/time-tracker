@@ -10,6 +10,7 @@ class TaskRow extends React.Component{
       <tr>
         <td>{id}</td>
         <td>{this.props.task.name}</td>
+        <td>{this.props.task.group}</td>
         <td>{this.props.task.done == 'true' ?
            <Checkbox defaultChecked></Checkbox> : <Checkbox id={id} onChange={(e) => {
              e.preventDefault();
@@ -36,6 +37,7 @@ class TaskTable extends React.Component{
                 <tr>
                   <th>ID</th>
                   <th>Task Name</th>
+                  <th>Task Group</th>
                   <th>Finished</th>
                 </tr>
               </thead>
