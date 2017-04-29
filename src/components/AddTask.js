@@ -38,7 +38,15 @@ class AddTask extends React.Component{
                 {' '}
                 <ControlLabel>Group Name</ControlLabel>
                 {' '}
-                <FormControl name="group" type="text" placeholder="Add it to group!" value={this.state.group} onChange={this.handleChange}/>
+                <FormControl name="group" type="text" placeholder="Create new group or select existing!" value={this.state.group} onChange={this.handleChange}/>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel>Select Group</ControlLabel>
+                {' '}
+                <FormControl componentClass="select" placeholder="select">
+                  <option value="select">select</option>
+                  <option value="other">...</option>
+                </FormControl>
               </FormGroup>
               <Button bsStyle="primary" bsSize="small" onClick={this.handleSubmit}>Add</Button>
             </Form>
