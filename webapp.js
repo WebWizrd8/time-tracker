@@ -29,6 +29,13 @@ app.post('/api/tasks', function(req, res, err){
         res.send(err);
       }
       else if(doc.length === 0){
+        db.groups.find({name: newTask.group}, function(err, doc){
+          if(err){
+            res.send(err);
+          }
+          if(doc.length === 0) db.groups.insert({name: newTask.group});
+        });
+
         db.tasks.insert({name: newTask.name, group: newTask.group, done: "false"}, function(err, doc){
           if(err){
             res.send(err);
