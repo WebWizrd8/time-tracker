@@ -8,14 +8,20 @@ class AddTask extends React.Component{
     super();
     this.state = {
       name : "",
-      group: ""
+      group: "",
+      selected: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
   handleSubmit(e){
     e.preventDefault();
-    this.props.addTask({name: this.state.name, group: this.state.group});
+    if(this.state.selected !== "selected" && this.state.selected !== ""){
+      this.props.addTask({name: this.state.name, group: this.state.selected});
+    }else{
+      this.props.addTask({name: this.state.name, group: this.state.group});
+    }
     this.setState({name: "", group: ""});
   }
 
@@ -24,6 +30,11 @@ class AddTask extends React.Component{
     let name = target.name;
     let value = target.value;
     this.setState({[name]: value});
+  }
+  handleSelect(e){
+    let target = e.target;
+    let value = target.value;
+    this.setState({selected: value});
   }
     render(){
       var groupElements = this.props.groups.map((group) => {
@@ -46,7 +57,7 @@ class AddTask extends React.Component{
               <FormGroup>
                 <ControlLabel>Select Group</ControlLabel>
                 {' '}
-                <FormControl componentClass="select" placeholder="select">
+                <FormControl componentClass="select" placeholder="select" onChange={this.handleSelect}>
                   <option value="select">select</option>
                   {groupElements}
                 </FormControl>
