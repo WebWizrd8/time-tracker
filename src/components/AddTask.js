@@ -26,6 +26,9 @@ class AddTask extends React.Component{
     this.setState({[name]: value});
   }
     render(){
+      var groupElements = this.props.groups.map((group) => {
+        return <option value={group.name}>{group.name}</option>
+      });
        return(
          <Panel header="Add Task">
             <Form inline>
@@ -45,7 +48,7 @@ class AddTask extends React.Component{
                 {' '}
                 <FormControl componentClass="select" placeholder="select">
                   <option value="select">select</option>
-                  <option value="other">...</option>
+                  {groupElements}
                 </FormControl>
               </FormGroup>
               <Button bsStyle="primary" bsSize="small" onClick={this.handleSubmit}>Add</Button>

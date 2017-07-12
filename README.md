@@ -1,5 +1,5 @@
 # Time-Tracker
-MERN - MEAN Tutorial
+MERN Tutorial
 
 ## 1.0 Setting up
 Create Time-Tracker folder for the application we are making.

@@ -8,7 +8,8 @@ class Main extends React.Component{
   constructor(){
     super();
     this.state =  {
-      tasks : []
+      tasks : [],
+      groups : []
     };
     this.loadData = this.loadData.bind(this);
     this.addTask = this.addTask.bind(this);
@@ -60,11 +61,14 @@ class Main extends React.Component{
     $.ajax('/api/tasks').done((data) => {
       this.setState({tasks: data});
     });
+    $.ajax('/api/groups').done((data) => {
+      this.setState({groups: data});
+    });
   }
   render(){
      return(
         <div>
-        <AddTask tasks = {this.state.tasks} addTask = {this.addTask}/>
+        <AddTask tasks = {this.state.tasks} groups = {this.state.groups} addTask = {this.addTask}/>
         <TaskTable tasks = {this.state.tasks} deleteTask = {this.deleteTask}/>
         </div>
     );

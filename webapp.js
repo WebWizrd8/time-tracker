@@ -18,6 +18,16 @@ app.get('/api/tasks',function(req, res, err){
   });
 });
 
+//get all groups
+app.get('/api/groups',function(req, res, err){
+  db.groups.find({}, function(err, doc){
+    if(err){
+      res.send(err);
+    }
+    res.json(doc);
+  });
+});
+
 //add task api
 app.post('/api/tasks', function(req, res, err){
   var newTask = req.body;
